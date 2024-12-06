@@ -16,4 +16,4 @@
 - Step 4: Create a Pull Request (PR)
 - Step 6: Review and Approval
 - Step 7: Merge the PR
-- Step 8: Sync with Master
+- Step 8: Sync with Mastergito
