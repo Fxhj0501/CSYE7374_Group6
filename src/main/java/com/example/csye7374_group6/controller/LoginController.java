@@ -26,7 +26,7 @@ public class LoginController {
             System.out.println("User logged in: " + currentUser.getUsername());
             return ResponseEntity.ok("Login successful, redirecting to products page.");
         } else {
-            return ResponseEntity.badRequest().body("Invalid username, password, or email verification code.");
+            return ResponseEntity.badRequest().body("Invalid username, password, or verification code.");
         }
     }
 }
