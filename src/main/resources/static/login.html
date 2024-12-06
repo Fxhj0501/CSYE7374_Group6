@@ -61,6 +61,9 @@
   <label for="email">Email:</label>
   <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
+  <label for="verificationCode">Verification Code:</label>
+  <input type="password" id="verificationCode" name="verificationCode" placeholder="Enter your verification code" required>
+
   <button type="submit">Login</button>
 </form>
 
@@ -73,8 +76,15 @@
       username: document.getElementById('username').value,
       password: document.getElementById('password').value,
       userType: document.getElementById('userType').value,
-      email: document.getElementById('email').value
+      email: document.getElementById('email').value,
+      verificationCode: document.getElementById('verificationCode').value
     };
+
+    // Verify verification code length
+    if (formData.verificationCode.length !== 6) {
+      alert('Verification code must be exactly 6 digits.');
+      return; // Stop form submission
+    }
 
     try {
       // Send POST request to backend
