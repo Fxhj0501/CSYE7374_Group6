@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Login Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 20px;
+    }
+    form {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+<h1>User Login Form</h1>
+<form id="loginForm">
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" placeholder="Enter your username" required>
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+  <label for="userType">Role:</label>
+  <select id="userType" name="userType" required>
+    <option value="">Select your role</option>
+    <option value="employee">Employee</option>
+    <option value="student">Student</option>
+    <option value="user">Regular User</option>
+  </select>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+  <button type="submit">Login</button>
+</form>
+
+<script>
+  document.getElementById('loginForm').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Collect form data
+    const formData = {
+      username: document.getElementById('username').value,
+      password: document.getElementById('password').value,
+      userType: document.getElementById('userType').value,
+      email: document.getElementById('email').value
+    };
+
+    try {
+      // Send POST request to backend
+      const url = `http://localhost:8080/login`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      // Handle response
+      if (response.ok) {
+        window.location.href = 'productDetail.html';
+      } else {
+        const error = await response.json();
+        alert('Login failed: ' + error.message);
+        window.location.reload();
+      }
+    } catch (err) {
+      console.error('Request failed:', err);
+      alert('Login failed, please check your network connection or try again later.');
+      window.location.reload();
+    }
+  });
+</script>
+</body>
+</html>

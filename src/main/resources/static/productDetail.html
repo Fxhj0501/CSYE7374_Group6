@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 768px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .price {
+            font-size: 20px;
+            color: #e63946;
+            margin: 10px 0;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .option {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #f9f9f9;
+        }
+        .option.active {
+            background-color: #e63946;
+            color: #fff;
+            border-color: #e63946;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            background-color: #e63946;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 id="product-name">Product Name: iPhone 16 Pro</h1>
+    <div class="price" id="price">Price: ¥8398</div>
+
+    <!-- Color Section -->
+    <div class="section">
+        <h2>Color</h2>
+        <div class="options" id="color-options">
+            <div class="option">Natural Titanium</div>
+            <div class="option">Black Titanium</div>
+            <div class="option">Sand Titanium</div>
+            <div class="option">White Titanium</div>
+        </div>
+    </div>
+
+    <!-- Storage Section -->
+    <div class="section">
+        <h2>Storage Size</h2>
+        <div class="options" id="storage-options">
+            <div class="option">128GB</div>
+            <div class="option">256GB</div>
+            <div class="option">512GB</div>
+            <div class="option">1TB</div>
+        </div>
+    </div>
+
+    <!-- Service Type Section -->
+    <div class="section">
+        <h2>Service Type</h2>
+        <div class="options" id="service-options">
+            <div class="option">Standard Warranty</div>
+            <div class="option">AppleCare+</div>
+        </div>
+    </div>
+
+    <!-- Bundle Type Section -->
+    <div class="section">
+        <h2>Bundle Type</h2>
+        <div class="options" id="bundle-options">
+            <div class="option">Standard Package</div>
+            <div class="option">Premium Package</div>
+        </div>
+    </div>
+
+    <!-- Buy Button -->
+    <button class="button" onclick="submitSelection()">Buy Now</button>
+</div>
+
+<script>
+    // State for selected options
+    const state = {
+        color: "",
+        storageSize: "",
+        serviceType: "",
+        bundleType: ""
+    };
+
+    // Add click event listeners to options
+    document.querySelectorAll('.options').forEach(optionGroup => {
+        optionGroup.addEventListener('click', event => {
+            if (event.target.classList.contains('option')) {
+                // Remove active class from all siblings
+                optionGroup.querySelectorAll('.option').forEach(option => option.classList.remove('active'));
+                // Add active class to clicked option
+                event.target.classList.add('active');
+
+                // Update state
+                const groupId = optionGroup.id;
+                const selectedValue = event.target.textContent.trim();
+                if (groupId === "color-options") state.color = selectedValue;
+                if (groupId === "storage-options") state.storageSize = selectedValue;
+                if (groupId === "service-options") state.serviceType = selectedValue;
+                if (groupId === "bundle-options") state.bundleType = selectedValue;
+
+                console.log("Current Selection:", state);
+            }
+        });
+    });
+
+
+    // Submit selection to backend
+    function submitSelection() {
+        if (!state.color || !state.storageSize || !state.serviceType || !state.bundleType) {
+            alert("Please select all options!");
+            return;
+        }
+
+        const requestData = {
+            productName: "iPhone 16 Pro",
+            price: 8398,
+            color: state.color,
+            storageSize: state.storageSize,
+            serviceType: state.serviceType,
+            bundleType: state.bundleType
+        };
+
+        console.log("Submitting to backend:", requestData);
+        const url = `http://localhost:8080/productDetail`;
+        // 发送请求到后端
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = "payment.html";
+                } else {
+                    return response.text().then(text => {
+                        throw new Error(text || "Failed to place order");
+                    });
+                }
+            })
+            .catch(error => {
+                alert("Error placing order: " + error.message);
+            });
+    }
+
+</script>
+</body>
+</html>

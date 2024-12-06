@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Review</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 768px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .value {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Order Review</h1>
+    <!-- Product Name -->
+    <div class="section">
+        <div class="label">Product Name:</div>
+        <div class="value" id="product-name"></div>
+    </div>
+    <!-- Price -->
+    <div class="section">
+        <div class="label">Price (USD):</div>
+        <div class="value" id="price"></div>
+    </div>
+    <!-- Username -->
+    <div class="section">
+        <div class="label">Username:</div>
+        <div class="value" id="username"></div>
+    </div>
+    <!-- Email -->
+    <div class="section">
+        <div class="label">Email:</div>
+        <div class="value" id="email"></div>
+    </div>
+    <!-- Address -->
+    <div class="section">
+        <div class="label">Address:</div>
+        <div class="value" id="address"></div>
+    </div>
+</div>
+
+<script>
+    // Fetch order review details and populate the page
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch("http://localhost:8080/getOrderReview")
+            .then(response => response.json())
+            .then(purchaseOrder => {
+                // Populate fields with data from the response
+                document.getElementById("product-name").textContent = purchaseOrder.productName;
+                document.getElementById("price").textContent = purchaseOrder.price;
+                document.getElementById("username").textContent = purchaseOrder.username;
+                document.getElementById("email").textContent = purchaseOrder.email;
+                document.getElementById("address").textContent = purchaseOrder.address;
+            })
+            .catch(error => {
+                alert("Failed to load order review details: " + error.message);
+            });
+    });
+</script>
+</body>
+</html>
