@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @Component
 @Data
 @Setter
 @Getter
-public class PurchaseOrder {
+public class PurchaseOrder implements Serializable {
     String productName;
     Double price;
     String username;

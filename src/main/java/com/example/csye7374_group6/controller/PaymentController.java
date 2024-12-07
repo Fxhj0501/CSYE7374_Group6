@@ -3,6 +3,8 @@ package com.example.csye7374_group6.controller;
 import com.example.csye7374_group6.dao.ProductDetail;
 import com.example.csye7374_group6.dao.PurchaseOrder;
 import com.example.csye7374_group6.dto.ProductDetailDTO;
+import com.example.csye7374_group6.patterns.factory.Logger;
+import com.example.csye7374_group6.patterns.factory.LoggerFactory;
 import com.example.csye7374_group6.patterns.singleton.UserSingleton;
 import com.example.csye7374_group6.vo.OrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,16 @@ public class PaymentController {
         purchaseOrder.setAddress(orderDetail.getAddress());
         purchaseOrder.setEmail(currentUser.getEmail());
         System.out.println(purchaseOrder.getAddress());
+
+        Logger consoleLogger = LoggerFactory.createLogger("CONSOLE");
+        consoleLogger.log(purchaseOrder);
+
+        Logger fileLogger = LoggerFactory.createLogger("FILE");
+        fileLogger.log(purchaseOrder);
+
+        Logger databaseLogger = LoggerFactory.createLogger("DATABASE");
+        databaseLogger.log(purchaseOrder);
+
         return ResponseEntity.ok("Payment successful.");
     }
 }
