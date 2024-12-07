@@ -1,0 +1,7 @@
+Purchase Order Log:
+Username: 2232053429@qq.com
+Address: 2ww
+Email: mengdeyang1127@outlook.com
+ProductName: iPhone 16 Pro
+Price: 8398.0
+------------------------------
