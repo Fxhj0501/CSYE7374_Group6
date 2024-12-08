@@ -3,6 +3,9 @@ package com.example.csye7374_group6.controller;
 import com.example.csye7374_group6.dao.ProductDetail;
 import com.example.csye7374_group6.dao.PurchaseOrder;
 import com.example.csye7374_group6.dto.ProductDetailDTO;
+import com.example.csye7374_group6.patterns.command.CheckoutCommand;
+import com.example.csye7374_group6.patterns.command.CommandInvoker;
+import com.example.csye7374_group6.patterns.command.OrderService;
 import com.example.csye7374_group6.patterns.factory.Logger;
 import com.example.csye7374_group6.patterns.factory.LoggerFactory;
 import com.example.csye7374_group6.patterns.singleton.UserSingleton;
@@ -20,6 +23,14 @@ public class PaymentController {
     private ProductDetail productDetail;
     @Autowired
     private PurchaseOrder purchaseOrder;
+    private final OrderService orderService;
+    private final CommandInvoker invoker;
+
+    @Autowired
+    public PaymentController(OrderService orderService) {
+        this.orderService = orderService;
+        this.invoker = new CommandInvoker();
+    }
     @GetMapping("/getOrderDetails")
     public OrderDetail showOrderDetails() {
         UserSingleton currentUser = UserSingleton.getInstance();
@@ -50,6 +61,8 @@ public class PaymentController {
 
         Logger databaseLogger = LoggerFactory.createLogger("DATABASE");
         databaseLogger.log(purchaseOrder);
+
+        invoker.executeCommand(new CheckoutCommand(orderService, purchaseOrder));
 
         return ResponseEntity.ok("Payment successful.");
     }
