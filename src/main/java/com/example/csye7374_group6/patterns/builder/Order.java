@@ -10,7 +10,6 @@ public class Order {
     private final String serviceType;
     private final String bundleType;
 
-    // 私有构造函数
     private Order(OrderBuilder builder) {
         this.productName = builder.productName;
         this.price = builder.price;
@@ -57,7 +56,6 @@ public class Order {
                 '}';
     }
 
-    // 静态内部 Builder 类
     public static class OrderBuilder {
         private String productName;
         private double price;
