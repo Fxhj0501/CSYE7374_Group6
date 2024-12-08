@@ -11,17 +11,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LoginController {
+
     @PostMapping("/login")
     public ResponseEntity<String> UserLogin(@RequestBody User user) {
-        // Different verification template implementation classes are used according to the needs of the users.
-        // Here we simply use a default template.
+        String username = user.getUsername();
+        String userType = user.getUserType();
+        String password = user.getPassword();
+        String email = user.getEmail();
+        String verificationCode = user.getVerificationCode();
+
+        User userToLogin = new User.UserBuilder()
+                .setUsername(username)
+                .setUserType(userType)
+                .setPassword(password)
+                .setEmail(email)
+                .setVerificationCode(verificationCode)
+                .build();
+
         TwoFactorAuthentication auth = new PasswordAndEmailAuthentication();
-        if (auth.isAuthenticated(user)) {
+        if (auth.isAuthenticated(userToLogin)) {
             UserSingleton currentUser = UserSingleton.getInstance();
-            currentUser.setUsername(user.getUsername());
-            currentUser.setUserType(user.getUserType());
-            currentUser.setPassword(user.getPassword());
-            currentUser.setEmail(user.getEmail());
+            currentUser.setUsername(userToLogin.getUsername());
+            currentUser.setUserType(userToLogin.getUserType());
+            currentUser.setPassword(userToLogin.getPassword());
+            currentUser.setEmail(userToLogin.getEmail());
 
             System.out.println("User logged in: " + currentUser.getUsername());
             return ResponseEntity.ok("Login successful, redirecting to products page.");
@@ -30,3 +43,4 @@ public class LoginController {
         }
     }
 }
+
