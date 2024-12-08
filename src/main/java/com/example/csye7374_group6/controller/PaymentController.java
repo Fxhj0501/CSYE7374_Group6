@@ -20,6 +20,8 @@ public class PaymentController {
     private ProductDetail productDetail;
     @Autowired
     private PurchaseOrder purchaseOrder;
+
+    private Logger fileLogger = LoggerFactory.createLogger("FILE");
     @GetMapping("/getOrderDetails")
     public OrderDetail showOrderDetails() {
         UserSingleton currentUser = UserSingleton.getInstance();
@@ -40,16 +42,9 @@ public class PaymentController {
         purchaseOrder.setUsername(currentUser.getUsername());
         purchaseOrder.setAddress(orderDetail.getAddress());
         purchaseOrder.setEmail(currentUser.getEmail());
-        System.out.println(purchaseOrder.getAddress());
+        purchaseOrder.nextState();
 
-        Logger consoleLogger = LoggerFactory.createLogger("CONSOLE");
-        consoleLogger.log(purchaseOrder);
-
-        Logger fileLogger = LoggerFactory.createLogger("FILE");
         fileLogger.log(purchaseOrder);
-
-        Logger databaseLogger = LoggerFactory.createLogger("DATABASE");
-        databaseLogger.log(purchaseOrder);
 
         return ResponseEntity.ok("Payment successful.");
     }

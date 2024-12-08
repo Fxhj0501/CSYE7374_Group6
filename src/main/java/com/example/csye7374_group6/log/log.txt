@@ -5,3 +5,31 @@ Email: mengdeyang1127@outlook.com
 ProductName: iPhone 16 Pro
 Price: 8398.0
 ------------------------------
+Purchase Order Log:
+Username: Zijian
+Address: 123
+Email: feng.zij@northeastern.edu
+ProductName: iPhone 16 Pro
+Price: 8398.0
+------------------------------
+Purchase Order Log:
+Username: Zijian
+Address: 150 Camden St
+Email: feng.zij@northeastern.edu
+ProductName: iPhone 16 Pro
+Price: 8398.0
+------------------------------
+Purchase Order Log:
+Username: Zijian
+Address: 123123
+Email: feng.zij@northeastern.edu
+ProductName: iPhone 16 Pro
+Price: 8398.0
+------------------------------
+Purchase Order Log:
+Username: Zijian
+Address: 123
+Email: feng.zij@northeastern.edu
+ProductName: iPhone 16 Pro
+Price: 8398.0
+------------------------------
