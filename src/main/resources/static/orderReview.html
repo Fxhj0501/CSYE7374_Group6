@@ -67,6 +67,14 @@
         <div class="label">Address:</div>
         <div class="value" id="address"></div>
     </div>
+
+    <!-- State -->
+    <div class="section">
+        <div class="label">State:</div>
+        <div class="value" id="state"></div>
+    </div>
+
+
 </div>
 
 <script>
@@ -76,16 +84,18 @@
             .then(response => response.json())
             .then(purchaseOrder => {
                 // Populate fields with data from the response
-                document.getElementById("product-name").textContent = purchaseOrder.productName;
-                document.getElementById("price").textContent = purchaseOrder.price;
-                document.getElementById("username").textContent = purchaseOrder.username;
-                document.getElementById("email").textContent = purchaseOrder.email;
-                document.getElementById("address").textContent = purchaseOrder.address;
+                document.getElementById("product-name").textContent = purchaseOrder.productName || "N/A";
+                document.getElementById("price").textContent = purchaseOrder.price || "N/A";
+                document.getElementById("username").textContent = purchaseOrder.username || "N/A";
+                document.getElementById("email").textContent = purchaseOrder.email || "N/A";
+                document.getElementById("address").textContent = purchaseOrder.address || "N/A";
+                document.getElementById("state").textContent = purchaseOrder.state || "N/A"; // 新增字段
             })
             .catch(error => {
                 alert("Failed to load order review details: " + error.message);
             });
     });
+
 </script>
 </body>
 </html>

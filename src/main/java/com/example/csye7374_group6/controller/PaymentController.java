@@ -2,7 +2,6 @@ package com.example.csye7374_group6.controller;
 
 import com.example.csye7374_group6.dao.ProductDetail;
 import com.example.csye7374_group6.dao.PurchaseOrder;
-import com.example.csye7374_group6.dto.ProductDetailDTO;
 import com.example.csye7374_group6.patterns.command.CheckoutCommand;
 import com.example.csye7374_group6.patterns.command.CommandInvoker;
 import com.example.csye7374_group6.patterns.command.OrderService;
@@ -23,6 +22,8 @@ public class PaymentController {
     private ProductDetail productDetail;
     @Autowired
     private PurchaseOrder purchaseOrder;
+
+    private Logger fileLogger = LoggerFactory.createLogger("FILE");
     private final OrderService orderService;
     private final CommandInvoker invoker;
 
@@ -51,16 +52,9 @@ public class PaymentController {
         purchaseOrder.setUsername(currentUser.getUsername());
         purchaseOrder.setAddress(orderDetail.getAddress());
         purchaseOrder.setEmail(currentUser.getEmail());
-        System.out.println(purchaseOrder.getAddress());
+        purchaseOrder.nextState();
 
-        Logger consoleLogger = LoggerFactory.createLogger("CONSOLE");
-        consoleLogger.log(purchaseOrder);
-
-        Logger fileLogger = LoggerFactory.createLogger("FILE");
         fileLogger.log(purchaseOrder);
-
-        Logger databaseLogger = LoggerFactory.createLogger("DATABASE");
-        databaseLogger.log(purchaseOrder);
 
         invoker.executeCommand(new CheckoutCommand(orderService, purchaseOrder));
 
