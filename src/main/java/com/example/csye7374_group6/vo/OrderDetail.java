@@ -10,7 +10,6 @@ import lombok.Data;
 @Data
 public class OrderDetail {
     ProductDetail productDetailDTO;
-    DiscountStrategy discountStrategy;
     UserSingleton user;
     String address;
 }

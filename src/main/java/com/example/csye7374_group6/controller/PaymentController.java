@@ -39,21 +39,6 @@ public class PaymentController {
         UserSingleton currentUser = UserSingleton.getInstance();
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setProductDetailDTO(productDetail);
-        DiscountStrategy discountStrategy;
-        switch (currentUser.getUserType()) {
-            case "Employee":
-                discountStrategy = new EmployeeDiscountStrategy();
-                break;
-            case "Regular User":
-                discountStrategy = new RegularUserDiscountStrategy();
-                break;
-            case "Student":
-                discountStrategy = new StudentDiscountStrategy();
-                break;
-            default:
-                discountStrategy = new RegularUserDiscountStrategy();
-        }
-        orderDetail.setDiscountStrategy(discountStrategy);
         orderDetail.setUser(currentUser);
         System.out.println(productDetail.getProductName());
         return orderDetail;
@@ -65,13 +50,14 @@ public class PaymentController {
         DiscountContext discountContext = new DiscountContext();
         DiscountStrategy discountStrategy;
         switch (currentUser.getUserType()) {
-            case "Employee":
+            case "employee":
                 discountStrategy = new EmployeeDiscountStrategy();
                 break;
-            case "Regular User":
+            case "user":
+                System.out.println("asdasdasdasda");
                 discountStrategy = new RegularUserDiscountStrategy();
                 break;
-            case "Student":
+            case "student":
                 discountStrategy = new StudentDiscountStrategy();
                 break;
             default:
