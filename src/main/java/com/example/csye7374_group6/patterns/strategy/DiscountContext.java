@@ -11,7 +11,7 @@ public class DiscountContext {
     // 计算最终价格
     public double getFinalPrice(double price) {
         if (discountStrategy == null) {
-            throw new IllegalStateException("未设置折扣策略！");
+            throw new IllegalStateException("Unset discountStrategy!");
         }
         return discountStrategy.calculateDiscount(price);
     }
