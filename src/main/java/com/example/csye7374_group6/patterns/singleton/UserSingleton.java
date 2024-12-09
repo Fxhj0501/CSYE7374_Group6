@@ -1,5 +1,9 @@
 package com.example.csye7374_group6.patterns.singleton;
 
+import com.example.csye7374_group6.patterns.strategy.DiscountStrategy;
+import com.example.csye7374_group6.patterns.strategy.EmployeeDiscountStrategy;
+import com.example.csye7374_group6.patterns.strategy.RegularUserDiscountStrategy;
+import com.example.csye7374_group6.patterns.strategy.StudentDiscountStrategy;
 import lombok.Data;
 
 public class UserSingleton {
@@ -50,5 +54,19 @@ public class UserSingleton {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+    public DiscountStrategy getDiscountStrategy() {
+        switch (this.userType) {
+            case "Employee":
+                return new EmployeeDiscountStrategy();
+            case "Regular User":
+                return new RegularUserDiscountStrategy();
+            case "Student":
+                return new StudentDiscountStrategy();
+            default:
+                throw new IllegalArgumentException("未知用户类型！");
+        }
     }
 }

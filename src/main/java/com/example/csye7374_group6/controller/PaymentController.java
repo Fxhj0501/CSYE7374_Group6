@@ -8,6 +8,7 @@ import com.example.csye7374_group6.patterns.command.OrderService;
 import com.example.csye7374_group6.patterns.factory.Logger;
 import com.example.csye7374_group6.patterns.factory.LoggerFactory;
 import com.example.csye7374_group6.patterns.singleton.UserSingleton;
+import com.example.csye7374_group6.patterns.strategy.DiscountContext;
 import com.example.csye7374_group6.vo.OrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class PaymentController {
         UserSingleton currentUser = UserSingleton.getInstance();
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setProductDetailDTO(productDetail);
-        orderDetail.setDiscountStrategy(null);
+        orderDetail.setDiscountStrategy(currentUser.getDiscountStrategy());
         orderDetail.setUser(currentUser);
         System.out.println(productDetail.getProductName());
         return orderDetail;
@@ -46,9 +47,10 @@ public class PaymentController {
     @PostMapping("/pay")
     public ResponseEntity<String> pay(@RequestBody OrderDetail orderDetail){
         UserSingleton currentUser = UserSingleton.getInstance();
+        DiscountContext discountContext = new DiscountContext();
+        discountContext.setDiscountStrategy(currentUser.getDiscountStrategy());
         purchaseOrder.setProductName(orderDetail.getProductDetailDTO().getProductName());
-        purchaseOrder.setPrice(orderDetail.getProductDetailDTO().getPrice());
-        purchaseOrder.setPrice(orderDetail.getProductDetailDTO().getPrice());
+        purchaseOrder.setPrice(discountContext.getFinalPrice(orderDetail.getProductDetailDTO().getPrice()));
         purchaseOrder.setUsername(currentUser.getUsername());
         purchaseOrder.setAddress(orderDetail.getAddress());
         purchaseOrder.setEmail(currentUser.getEmail());
