@@ -1,5 +1,6 @@
 package com.example.csye7374_group6.patterns.singleton;
 
+import com.example.csye7374_group6.patterns.strategy.*;
 import lombok.Data;
 
 public class UserSingleton {
@@ -51,4 +52,5 @@ public class UserSingleton {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }
