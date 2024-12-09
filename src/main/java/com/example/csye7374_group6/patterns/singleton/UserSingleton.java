@@ -52,9 +52,5 @@ public class UserSingleton {
     public void setEmail(String email) {
         this.email = email;
     }
-
-
-    public DiscountStrategy getDiscountStrategy() {
-
-    }
+    
 }
